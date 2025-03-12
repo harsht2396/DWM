@@ -1,0 +1,30 @@
+Steps : 
+
+1) First of all I validated the data columns and values.
+2) Validated the data types for respective columns and decided which data type would be best.
+3) Observed, there are multiple values exceeding integer range(2,147,483,647) so I did chose BIGINT. 
+
+4) For filling the blank columns I used the formulas in excel as below - 
+	a. ROA (return on assets) : (Net Income/Total Assets)*100, but we want to calculate 
+		ROA(YTD annualized) : (Net Income/Total Assets)*(12/11)*100
+		- we have values as of Nov-24 so taking 11
+
+	b.Average Loan Size - Gross Loan Portfolio (GLP)/ Number of Active Borrowers
+	c.solvency -(company's ability to pay its long-term debts and stay solvent)
+		total equity/total assets
+	d.Operating Expense Ratio - the efficiency of an organization's operations by comparing operating expenses to its revenue or gross 
+	OLER - For this Operating expense is required or any type of expense which is done on daily basis. which I couldn't find. So if there is any other column to be 	used/other formula please enlighten me. 
+	 OLER is actually the Open Loan Exposure. (PARs – Reserves) / Equity.	
+
+	PAR - Past Due Assets: These are loans or financial obligations where the borrower has failed to make timely payments. The "past due" classification often applies when the payment is overdue by a specific period, such as 30 days, 60 days, etc.
+
+OLER (Operating Expense Ratio) = loan portfolio (GLP) (Operating Expenses + Loan Loss Reserves Gross Loan Portfolio (GLP))× 100
+*****	Open Loan Exposure. (PARs – Reserves) / Equity.
+
+5) Updated portfolio_DB as part of transformation. Made fund-1,2,3 as rows by doing pivot. so it can align with risk_db's fund column.
+6) Stored both of them in different CSV. 
+7) Created test DB and imported in SQL in two different tables.
+8) Standardized the fields name like Borrower to MFI_Name , borrower country to country and Total_Amount to Total_Amount_Invested.
+9) Implemented ETL logic for mapping MFI_Name to match in both tables by creating [vw_Portfolio_DB].
+10)Implemented ETL logic for mapping REGION name to match in both tables by creating [vw_risk_DB].
+11)Selected total amount invested from both the views joining region,country,borrower and fund to find difference.
